@@ -13,7 +13,6 @@ import com.example.einkaufliste.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
 
-    //Im Fragment immer "by activityViewModels()"
     private val viewmodel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentListBinding
 
@@ -21,7 +20,6 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentListBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
