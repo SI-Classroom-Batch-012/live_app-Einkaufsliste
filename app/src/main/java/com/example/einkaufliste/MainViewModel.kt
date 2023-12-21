@@ -4,9 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.einkaufliste.model.Item
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class MainViewModel: ViewModel() {
+class MainViewModel : ViewModel() {
 
     //Abschnitt 1: Hintergrunddaten/Testdaten
     val testdata: List<Item> = listOf(
@@ -24,32 +27,30 @@ class MainViewModel: ViewModel() {
         get() = _einkaufsListe
 
 
-
     //Abschnitt 3: Funktionen
-    fun addItem(name: String){
+    fun addItem(name: String) {
 
         val newItem = Item(name)
         val newList = einkaufsListe.value!! + newItem
 
-        _einkaufsListe.postValue(newList)
-
+        postListSorted(newList)
 
     }
 
     fun itemChecked(item: Item, checked: Boolean) {
 
-        //item enthält eine Referenz zu einem Item aus der LiveData.
-        //Deshalb reicht es diese Referenz zu verändern und die Daten werden in der LiveData aktualisiert
-        //Zum Überprüfen siehe Log Statements
+        val newList = einkaufsListe.value!!.toList()
+        val index = newList.indexOf(item)
+        newList[index].done = checked
 
-        Log.d("itemCheckedTest1", einkaufsListe.value!!.toString())
+        postListSorted(newList)
 
-        item.done = checked
+    }
 
-        Log.d("itemCheckedTest2", einkaufsListe.value!!.toString())
+    private fun postListSorted(newList: List<Item>) {
 
-
-
+        val sortedList: List<Item> = newList.sortedBy { it.done }
+        _einkaufsListe.postValue(sortedList)
 
     }
 

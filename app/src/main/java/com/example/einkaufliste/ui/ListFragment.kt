@@ -34,15 +34,16 @@ class ListFragment : Fragment() {
 
         //Abschnitt 1: Setup und Initialisierung
 
-        //Brauchen wir bisher nicht
+        val adapter = EinkaufsAdapter(viewmodel)
+        binding.einkauflisteRV.adapter = adapter
 
 
 
         //Abschnitt 2: Observer
         viewmodel.einkaufsListe.observe(viewLifecycleOwner){
+            //Lade neue Daten in alten Adapter
 
-            val adapter = EinkaufsAdapter(it, viewmodel)
-            binding.einkauflisteRV.adapter = adapter
+            adapter.submitList(it)
 
         }
 
@@ -68,8 +69,6 @@ class ListFragment : Fragment() {
             }
 
             dialogBuilder.show()
-
-
 
         }
 

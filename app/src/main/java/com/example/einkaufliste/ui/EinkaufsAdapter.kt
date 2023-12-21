@@ -1,17 +1,22 @@
 package com.example.einkaufliste.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.einkaufliste.MainViewModel
 import com.example.einkaufliste.databinding.ListItemBinding
+import com.example.einkaufliste.misc.ItemDiffUtil
 import com.example.einkaufliste.model.Item
 
+
+
+
+
 class EinkaufsAdapter(
-    var dataset: List<Item>,
-    val viewmodel: MainViewModel
-) : RecyclerView.Adapter<EinkaufsAdapter.ItemViewHolder>() {
+    private val viewmodel: MainViewModel
+) : ListAdapter<Item, EinkaufsAdapter.ItemViewHolder>(ItemDiffUtil()) {
 
     inner class ItemViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -20,22 +25,33 @@ class EinkaufsAdapter(
         return ItemViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return dataset.size
-    }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
-        val item = dataset[position]
+        val item = currentList[position]
 
         holder.binding.itemTV.text = item.name
+
         holder.binding.itemCB.isChecked = item.done
 
-        holder.binding.itemCB.setOnCheckedChangeListener { _, isChecked ->
+        if(item.done) {
+
+            holder.binding.itemTV.alpha = 1f
+            holder.binding.itemCB.alpha = 1f
+
+        } else {
+
+            holder.binding.itemTV.alpha = 0.5f
+            holder.binding.itemCB.alpha = 0.5f
+
+        }
+
+        holder.binding.itemCB.setOnClickListener {
+
+            val isChecked = holder.binding.itemCB.isChecked
 
             viewmodel.itemChecked(item, isChecked)
 
         }
-
     }
 }
