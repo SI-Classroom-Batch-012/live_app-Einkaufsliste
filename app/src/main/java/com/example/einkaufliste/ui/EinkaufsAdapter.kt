@@ -11,9 +11,6 @@ import com.example.einkaufliste.misc.ItemDiffUtil
 import com.example.einkaufliste.model.Item
 
 
-
-
-
 class EinkaufsAdapter(
     private val viewmodel: MainViewModel
 ) : ListAdapter<Item, EinkaufsAdapter.ItemViewHolder>(ItemDiffUtil()) {
@@ -34,17 +31,9 @@ class EinkaufsAdapter(
 
         holder.binding.itemCB.isChecked = item.done
 
-        if(item.done) {
+        Log.d("transparency_test1", "${item.done}")
 
-            holder.binding.itemTV.alpha = 1f
-            holder.binding.itemCB.alpha = 1f
 
-        } else {
-
-            holder.binding.itemTV.alpha = 0.5f
-            holder.binding.itemCB.alpha = 0.5f
-
-        }
 
         holder.binding.itemCB.setOnClickListener {
 
@@ -52,6 +41,15 @@ class EinkaufsAdapter(
 
             viewmodel.itemChecked(item, isChecked)
 
+            Log.d("transparency_test2", "${item.done}")
+            if (item.done) {
+                holder.binding.itemCL.alpha = 0.5f
+            } else {
+                holder.binding.itemCL.alpha = 1f
+            }
+
         }
+
+
     }
 }
