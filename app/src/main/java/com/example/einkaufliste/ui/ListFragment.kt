@@ -42,7 +42,7 @@ class ListFragment : Fragment() {
         //Abschnitt 2: Observer
         viewmodel.einkaufsListe.observe(viewLifecycleOwner){
             //Lade neue Daten in alten Adapter
-
+            //Weil adapter ein ListAdapter ist werden die Daten dynamisch geupdated
             adapter.submitList(it)
 
         }
@@ -60,7 +60,8 @@ class ListFragment : Fragment() {
             dialogBuilder.setPositiveButton("Bestätigen") { _, _ ->
 
                 val name = nameET.text.toString()
-                viewmodel.addItem(name)
+
+                viewmodel.insertItem(name)
 
             }
 

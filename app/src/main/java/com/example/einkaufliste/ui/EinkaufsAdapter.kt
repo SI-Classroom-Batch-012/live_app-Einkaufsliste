@@ -31,25 +31,26 @@ class EinkaufsAdapter(
 
         holder.binding.itemCB.isChecked = item.done
 
-        Log.d("transparency_test1", "${item.done}")
 
 
 
-        holder.binding.itemCB.setOnClickListener {
-
-            val isChecked = holder.binding.itemCB.isChecked
-
-            viewmodel.itemChecked(item, isChecked)
-
-            Log.d("transparency_test2", "${item.done}")
-            if (item.done) {
-                holder.binding.itemCL.alpha = 0.5f
-            } else {
-                holder.binding.itemCL.alpha = 1f
-            }
-
-        }
+//        holder.binding.itemCB.setOnClickListener {
+//
+//            val isChecked = holder.binding.itemCB.isChecked
+//
+//            viewmodel.itemChecked(item, isChecked)
+//
+//            if (item.done) {
+//                holder.binding.itemCL.alpha = 0.5f
+//            } else {
+//                holder.binding.itemCL.alpha = 1f
+//            }
+//
+//
+//        }
 
 
     }
+
+
 }
